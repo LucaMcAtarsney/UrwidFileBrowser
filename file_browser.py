@@ -1,19 +1,21 @@
 import os
 import urwid as u
 
+# this defines the styling for different attributes
 PALETTE = [
     ("normal","white","black"),
     ("highlighted","black","yellow"),
     ("bg","white","black")
 ]
 
+# checks for esc, can implement other functionality here
 def handleinput(key):
     if key == "esc":
         path = os.path.dirname(current_path)
         open_directory(path)
 
 
-
+# when button is selected with either click or enter
 def on_item_chosen(button,full_path):
 
     if os.path.isdir(full_path):
@@ -45,6 +47,7 @@ def list_directory(path):
     # wraps the widgets in a listbox
     return u.ListBox(u.SimpleFocusListWalker(widgets))
 
+# set mainwidget, lists all directories
 def open_directory(path):
     global current_path
 
@@ -54,7 +57,12 @@ def open_directory(path):
 
     main_placeholder.original_widget = padded
 
-current_path = "/Users/luca"
+# can replace to your desired path
+current_path = "."
+
+# this gets changed in open directory
 main_placeholder = u.WidgetPlaceholder(u.SolidFill(" "))
 open_directory(current_path)
+
+# start
 u.MainLoop(main_placeholder,palette=PALETTE,unhandled_input=handleinput).run()
